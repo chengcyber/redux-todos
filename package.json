@@ -1,6 +1,8 @@
 {
   "name": "redux-todos",
   "version": "0.1.0",
+  "description": "DEMO: Redux todos App",
+  "main": "index.js",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.8.5"
@@ -15,4 +17,15 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimochg/redux-todos.git"
+  },
+  "keywords": [],
+  "author": "LIU CHENG <kimochg@outlook.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kimochg/redux-todos/issues"
+  },
+  "homepage": "https://github.com/kimochg/redux-todos#readme"
 }
