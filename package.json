@@ -5,6 +5,7 @@
   "main": "index.js",
   "private": true,
   "devDependencies": {
+    "cz-conventional-changelog": "^1.2.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -29,5 +30,10 @@
   "bugs": {
     "url": "https://github.com/kimochg/redux-todos/issues"
   },
-  "homepage": "https://github.com/kimochg/redux-todos#readme"
+  "homepage": "https://github.com/kimochg/redux-todos#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
