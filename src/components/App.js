@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-import TodoApp from './TodoApp.js'
+import store from '../reducers/index.js';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <TodoApp />
-      </div>
-    );
-  }
+import TodoEntry from './TodoEntry.js'
+import TodoList from './TodoList.js';
+import Footer from './Footer.js'
+
+
+export default class App extends Component {
+
+    render () {
+
+        return (
+        <div>
+            <TodoEntry store={store} />
+            <TodoList store={store} />
+            <Footer store={store} />
+        </div>
+        )
+    }
+
 }
-
-export default App;
