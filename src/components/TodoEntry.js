@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-
-let newTodoId = 0;
+import addTodo from '../actions/addTodo.js';
 
 
 let TodoEntry = ({
@@ -10,13 +8,6 @@ let TodoEntry = ({
 }) => {
 
     let input;
-    const onAddClick = () => {
-        dispatch({
-            type: 'ADD_TODO',
-            id: newTodoId++,
-            text: input.value
-        })
-    }
     return (
         <div>
             <input ref={node => {
@@ -24,7 +15,7 @@ let TodoEntry = ({
             }}
                    placeholder="Enter new task"/>
             <button onClick={ () => {
-                onAddClick();
+                dispatch(addTodo(input.value))
                 input.value = '';
             }
             }>Create
