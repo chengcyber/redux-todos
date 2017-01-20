@@ -7,11 +7,10 @@ import store from './reducers/index.js';
 
 const render = () =>
 ReactDOM.render(
-  <App {...store.getState()}/>,
+  <App store={store}/>,
   document.getElementById('root')
 );
 
-store.subscribe(render)
 
 render()
 

@@ -4,7 +4,6 @@ import TodoItem from './TodoItem.js';
 
 
 const TodoList = ({
-    store,
     todos,
     onTodoClick
 }) => {
@@ -14,7 +13,6 @@ const TodoList = ({
             {todos.map( (todo, index) =>
                 <TodoItem key={index}
                           {...todo}
-                          store={store}
                           onClick={ () => { onTodoClick(todo.id) }}
                 />
             )}

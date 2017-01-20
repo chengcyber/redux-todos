@@ -1,48 +1,19 @@
 import React, { Component } from 'react';
-import store from '../reducers/index.js';
 
 import TodoEntry from './TodoEntry.js'
-import TodoList from './TodoList.js';
+import VisibilityTodoList from '../containers/VisibilityTodoList.js';
 import Footer from './Footer.js'
 
-const getVisibleTodos = (todos, filter) => {
-    switch (filter) {
-        case 'SHOW_ALL': return todos;
-        case 'SHOW_ACTIVE':　return todos.filter(t => !t.completed)
-        case 'SHOW_COMPLETED': return todos.filter(t => t.completed)
-        default: return todos;
-    }
-}
 
-let newTodoId = 0;
 
 const App = ({
-    todos,
-    visibilityFilter
+    store
 }) => {
 
         return (
         <div>
-            <TodoEntry
-                onAddClick={ text => {
-                    store.dispatch({
-                        type: 'ADD_TODO',
-                        id: newTodoId++,
-                        text
-                    })
-                    }
-                }
-            />
-            <TodoList
-                store={store}
-                todos={getVisibleTodos(todos, visibilityFilter)}
-                onTodoClick={ (id) => {
-                    store.dispatch({
-                        type: 'TOGGLE_TODO',
-                        id
-                    })
-                }}
-            />
+            <TodoEntry store={store} />
+            <VisibilityTodoList store={store} />
             <Footer store={store} />
         </div>
         )
