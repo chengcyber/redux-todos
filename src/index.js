@@ -5,22 +5,23 @@ import App from './components/App';
 
 import store from './reducers/index.js';
 
-class Provider extends React.Component {
+// class Provider extends React.Component {
+//
+//     getChildContext () {
+//         return {
+//             store: this.props.store
+//         }
+//     }
+//
+//     render() {
+//         return this.props.children
+//     }
+// }
+// Provider.childContextTypes = {
+//     store: React.PropTypes.object
+// }
 
-    getChildContext () {
-        return {
-            store: this.props.store
-        }
-    }
-
-    render() {
-        return this.props.children
-    }
-}
-Provider.childContextTypes = {
-    store: React.PropTypes.object
-}
-
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
     <Provider store={store}>
