@@ -5,7 +5,8 @@ let newTodoId = 0;
 class TodoEntry extends React.Component {
 
     componentDidMount() {
-        this.unsubscribe = this.props.store.subscribe( () => {
+        const { store } = this.context;
+        this.unsubscribe = store.subscribe( () => {
             this.forceUpdate();
         })
     }
@@ -16,8 +17,7 @@ class TodoEntry extends React.Component {
 
     render() {
         let input;
-        const props = this.props;
-        const store = props.store;
+        const { store } = this.context;
         const onAddClick = (text) => {
             store.dispatch({
                 type: 'ADD_TODO',
@@ -37,6 +37,9 @@ class TodoEntry extends React.Component {
             </div>
         )
     }
+}
+TodoEntry.contextTypes = {
+    store: React.PropTypes.object
 }
 
 export default TodoEntry;

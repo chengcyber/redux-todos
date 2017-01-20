@@ -5,14 +5,31 @@ import App from './components/App';
 
 import store from './reducers/index.js';
 
-const render = () =>
+class Provider extends React.Component {
+
+    getChildContext () {
+        return {
+            store: this.props.store
+        }
+    }
+
+    render() {
+        return this.props.children
+    }
+}
+Provider.childContextTypes = {
+    store: React.PropTypes.object
+}
+
+
 ReactDOM.render(
-  <App store={store}/>,
+    <Provider store={store}>
+        <App />
+    </Provider>,
   document.getElementById('root')
 );
 
 
-render()
 
 
 

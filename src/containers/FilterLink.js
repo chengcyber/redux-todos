@@ -4,7 +4,7 @@ import Link from '../components/Link.js'
 class FilterLink extends React.Component {
 
     componentDidMount() {
-        const store = this.props.store;
+        const { store } = this.context;
         this.unsubscribe = store.subscribe( () => {
             this.forceUpdate();
         })
@@ -17,9 +17,9 @@ class FilterLink extends React.Component {
     render () {
 
         const props = this.props
-        const store = props.store
-        const filter = props.filter
+        const { store } = this.context;
 
+        const filter = props.filter
         const currentFilter = store.getState().visibilityFilter
         const active = !!(currentFilter === filter)
 
@@ -36,6 +36,9 @@ class FilterLink extends React.Component {
         )
     }
 
+}
+FilterLink.contextTypes = {
+    store: React.PropTypes.object
 }
 
 

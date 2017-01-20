@@ -5,16 +5,13 @@ import VisibilityTodoList from '../containers/VisibilityTodoList.js';
 import Footer from './Footer.js'
 
 
-
-const App = ({
-    store
-}) => {
+const App = () => {
 
         return (
         <div>
-            <TodoEntry store={store} />
-            <VisibilityTodoList store={store} />
-            <Footer store={store} />
+            <TodoEntry />
+            <VisibilityTodoList />
+            <Footer />
         </div>
         )
 

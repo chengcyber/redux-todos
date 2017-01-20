@@ -14,7 +14,8 @@ const getVisibleTodos = (todos, filter) => {
 export default class VisibilityTodoList extends Component {
 
     componentDidMount() {
-        this.unsubscribe = this.props.store.subscribe( () => {
+        const { store } = this.context;
+        this.unsubscribe = store.subscribe( () => {
             this.forceUpdate();
         })
     }
@@ -24,11 +25,8 @@ export default class VisibilityTodoList extends Component {
     }
 
     render() {
-        const props = this.props;
-        console.log(props)
-        const store = props.store;
+        const { store } = this.context;
         const state = store.getState();
-        console.log(state)
         return (
             <TodoList
                 todos={getVisibleTodos(state.todos, state.visibilityFilter)}
@@ -41,4 +39,7 @@ export default class VisibilityTodoList extends Component {
             />
         )
     }
+}
+VisibilityTodoList.contextTypes = {
+    store: React.PropTypes.object
 }
