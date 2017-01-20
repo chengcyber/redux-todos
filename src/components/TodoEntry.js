@@ -1,9 +1,9 @@
 import React from 'react';
 
-let newTodoId = 0;
+
 
 const TodoEntry = ({
-    store,
+    onAddClick
 }) => {
     let input;
     return (
@@ -11,12 +11,8 @@ const TodoEntry = ({
             <input ref={node => { input = node }}
                    placeholder="Enter new task"/>
             <button onClick={ () => {
-                store.dispatch({
-                    type: 'ADD_TODO',
-                    id: newTodoId++,
-                    text : input.value
-                });
-                input.value = ''
+                onAddClick(input.value);
+                input.value = '';
             }
             }>Create</button>
         </div>

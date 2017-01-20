@@ -1,16 +1,17 @@
 import React from 'react';
-import FilterLink from './FilterLink.js';
+import FilterLink from '../containers/FilterLink.js';
 
 const Footer = ({
     store
 }) => {
     return (
         <div>
-            <FilterLink store={store} filter="SHOW_ALL" text="All"/>
+            Show:
+            <FilterLink store={store} filter="SHOW_ALL">All</FilterLink>
             {", "}
-            <FilterLink store={store} filter="SHOW_ACTIVE" text="Active"/>
+            <FilterLink store={store} filter="SHOW_ACTIVE">Active</FilterLink>
             {", "}
-            <FilterLink store={store} filter="SHOW_COMPLETED" text="Completed"/>
+            <FilterLink store={store} filter="SHOW_COMPLETED">Completed</FilterLink>
         </div>
     )
 }

@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
-
-export default class TodoItem extends Component {
+import React, {Component} from 'react';
 
 
-    render () {
-        const props = this.props
-        const store = props.store
-        const liStyle = {
-            textDecoration: props.todo.completed?'line-through':''
-        }
-        return (
-            <div>
-                <li style={liStyle} onClick={ () => store.dispatch({
-                    type: 'TOGGLE_TODO',
-                    id: props.todo.id
-                })}>{props.todo.text}</li>
-            </div>
-        )
+const TodoItem = ({
+    text,
+    completed,
+    onClick
+}) => {
+    const liStyle = {
+        textDecoration: completed ? 'line-through' : ''
     }
-
+    return (
+        <div>
+            <li style={liStyle} onClick={onClick}>{text}</li>
+        </div>
+    )
 }
+
+export default TodoItem;
+
