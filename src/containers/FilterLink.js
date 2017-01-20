@@ -3,6 +3,16 @@ import Link from '../components/Link.js'
 
 class FilterLink extends React.Component {
 
+    componentDidMount() {
+        const store = this.props.store;
+        this.unsubscribe = store.subscribe( () => {
+            this.forceUpdate();
+        })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
 
     render () {
 
