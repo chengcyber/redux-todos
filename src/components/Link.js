@@ -2,17 +2,20 @@ import React from 'react';
 
 const Link = ({
     active,
-    onClick,
-    children
+    children,
+    onClick
 }) => {
 
-    const aStyle = {
-        textDecoration: active?'none':''
+    if (active) {
+        return <span>{children}</span>
     }
+
     return (
         <a href=""
-           style={aStyle}
-           onClick={onClick}
+           onClick = {(e) => {
+                e.preventDefault();
+                onClick();
+           }}
         >{children}</a>
     )
 }
