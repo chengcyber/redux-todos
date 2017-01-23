@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import TodoList from '../components/TodoList.js';
 import toggleTodo from '../actions/toggleTodo.js';
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
-        case 'SHOW_ALL': return todos;
-        case 'SHOW_ACTIVE':　return todos.filter(t => !t.completed)
-        case 'SHOW_COMPLETED': return todos.filter(t => t.completed)
+        case 'all': return todos;
+        case 'active':　return todos.filter(t => !t.completed)
+        case 'completed': return todos.filter(t => t.completed)
         default: return todos;
     }
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { params }) => {
     return {
-        todos: getVisibleTodos(state.todos, state.visibilityFilter)
+        todos: getVisibleTodos(state.todos, params.filter)
     }
 }
 
@@ -27,10 +28,10 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const VisibilityTodoList = connect(
+const VisibilityTodoList = withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(TodoList);
+)(TodoList));
 
 
 // class VisibilityTodoList extends Component {
