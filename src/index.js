@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
 // import './index.css';
-import { Provider } from 'react-redux';
+import Root from './components/Root'
+
 import configureStore from './configureStore';
 
 // class Provider extends React.Component {
@@ -25,9 +25,7 @@ const store = configureStore();
 
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+  <Root store={store} />,
   document.getElementById('root')
 );
 
