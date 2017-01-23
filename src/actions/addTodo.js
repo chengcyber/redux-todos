@@ -1,9 +1,9 @@
-let newTodoId = 0;
+import { v4 } from 'node-uuid';
 
 const addTodo = (text) => {
     return {
         type: 'ADD_TODO',
-        id: newTodoId++,
+        id: v4(),
         text
     }
 }
