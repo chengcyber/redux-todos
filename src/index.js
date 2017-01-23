@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 // import './index.css';
-
-import store from './reducers/index.js';
+import { Provider } from 'react-redux';
+import configureStore from './configureStore';
 
 // class Provider extends React.Component {
 //
@@ -21,7 +21,8 @@ import store from './reducers/index.js';
 //     store: React.PropTypes.object
 // }
 
-import { Provider } from 'react-redux';
+const store = configureStore();
+
 
 ReactDOM.render(
     <Provider store={store}>
