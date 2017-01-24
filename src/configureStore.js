@@ -22,6 +22,7 @@ const addLoggingToDispatch = (store) => {
      * Log group by action.type
      */
     return (action) => {
+        // console.log(action);
         console.group(action.type);
         console.log('%c prev state', 'color: grey', store.getState());
         console.log('%c action', 'color: blue', action);
@@ -30,8 +31,17 @@ const addLoggingToDispatch = (store) => {
         console.groupEnd();
         return returnValue;
     }
+}
 
-
+const addPromiseSupport = (store) => {
+    const rawDispatch = store.dispatch
+    return (action) => {
+        if (typeof action.then === 'function') {
+            // console.log(action);
+            return action.then(rawDispatch)
+        }
+        return rawDispatch(action)
+    }
 }
 
 
@@ -49,6 +59,11 @@ const configureStore = () => {
     if ( process.env.NODE_ENV !== 'production') {
         store.dispatch = addLoggingToDispatch(store)
     }
+
+    /**
+     * Add promise support to dispatch
+     */
+    store.dispatch = addPromiseSupport(store)
 
     /**
      * Throttle here to prevent expensive JSON.stringify in saveState() more often than 1 sec
