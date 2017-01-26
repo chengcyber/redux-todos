@@ -1,4 +1,7 @@
 import { createStore }from 'redux';
+// import { applyMiddleware } from 'redux';
+// import createLogger from 'redux-logger';
+// import promise from 'redux-promise';
 
 import todoApp from './reducers'
 import { loadState, saveState } from './modules/localStorage'
@@ -8,14 +11,12 @@ import throttle from 'lodash/throttle';
 /**
  * Add log group to Dispatch method
  */
-const addLoggingToDispatch = (store) => {
-    const rawDispatch = store.dispatch;
-
+const addLoggingToDispatch = (store) => (next) => {
     /**
      * Browser not support console.group
      */
     if (!console.group) {
-        return rawDispatch;
+        return next;
     }
 
     /**
@@ -26,24 +27,25 @@ const addLoggingToDispatch = (store) => {
         console.group(action.type);
         console.log('%c prev state', 'color: grey', store.getState());
         console.log('%c action', 'color: blue', action);
-        const returnValue = rawDispatch(action)
+        const returnValue = next(action)
         console.log('%c next state', 'color: green', store.getState());
         console.groupEnd();
         return returnValue;
     }
 }
 
-const addPromiseSupport = (store) => {
-    const rawDispatch = store.dispatch
-    return (action) => {
-        if (typeof action.then === 'function') {
-            // console.log(action);
-            return action.then(rawDispatch)
-        }
-        return rawDispatch(action)
+const promise = (store) => (next) => (action) => {
+    if (typeof action.then === 'function') {
+        return action.then(next)
     }
+    return next(action)
 }
 
+const applyMiddlewares = (store, middlewares) => {
+    middlewares.forEach(middleware =>
+        store.dispatch = middleware(store)(store.dispatch)
+    )
+}
 
 const configureStore = () => {
 
@@ -51,19 +53,20 @@ const configureStore = () => {
      * presistedState capture from local storage
      */
     const presistedState = loadState()
-    const store = createStore(todoApp, presistedState)
-
-    /**
-     * If not production env, log when dispatch
-     */
-    if ( process.env.NODE_ENV !== 'production') {
-        store.dispatch = addLoggingToDispatch(store)
-    }
-
     /**
      * Add promise support to dispatch
      */
-    store.dispatch = addPromiseSupport(store)
+    const middlewares = [promise];
+    const store = createStore(todoApp, presistedState)
+
+     /**
+     * If not production env, log when dispatch
+     */
+    if ( process.env.NODE_ENV !== 'production') {
+        middlewares.push(addLoggingToDispatch)
+    }
+
+    applyMiddlewares(store, middlewares)
 
     /**
      * Throttle here to prevent expensive JSON.stringify in saveState() more often than 1 sec
