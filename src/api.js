@@ -31,7 +31,6 @@ const delay = (ms) => {
 
 export const fetchTodos = (filter) => {
     return delay(500).then( () => {
-        console.log('api fetchTodo called');
         switch (filter) {
             case 'all':
                 return fakeDB.todos

@@ -4,8 +4,7 @@ import createLogger from 'redux-logger';
 import promise from 'redux-promise';
 
 import todoApp from './reducers'
-import { loadState, saveState } from './modules/localStorage'
-import throttle from 'lodash/throttle';
+
 
 
 /**
@@ -52,7 +51,7 @@ const configureStore = () => {
     /**
      * presistedState capture from local storage
      */
-    const presistedState = loadState()
+    // const presistedState = loadState()
     /**
      * Add promise support to dispatch
      */
@@ -68,16 +67,20 @@ const configureStore = () => {
 
     // applyMiddlewares(store, middlewares)
 
-    const store = createStore(todoApp, presistedState, applyMiddleware(...middlewares))
+    const store = createStore(
+        todoApp,
+        // presistedState,
+        applyMiddleware(...middlewares)
+    )
     /**
      * Throttle here to prevent expensive JSON.stringify in saveState() more often than 1 sec
      */
-    store.subscribe(throttle(() => {
-        const todos = store.getState().todos
-        saveState({
-            todos
-        })
-    }), 1000)
+    // store.subscribe(throttle(() => {
+    //     const todos = store.getState().todos
+    //     saveState({
+    //         todos
+    //     })
+    // }), 1000)
 
     return store;
 }
