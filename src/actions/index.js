@@ -27,6 +27,11 @@ const receiveTodos = (filter, response) => {
     }
 }
 
+export const requestTodos = (filter) => ({
+    type: 'REQUEST_TODOS',
+    filter,
+})
+
 /**
  * Wrapped api REST fetchTodos for better encapsulation
  */

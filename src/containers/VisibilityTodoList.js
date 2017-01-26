@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import TodoList from '../components/TodoList.js';
 import * as actions from '../actions';
-import { getVisibleTodos } from '../reducers';
+import { getVisibleTodos, getIsFetching } from '../reducers';
 
 /**
  * To invoke life cycle method to update todos
@@ -21,13 +21,18 @@ class VisibilityTodoList extends Component {
     }
 
     fetchData() {
-        const { filter, fetchTodos } = this.props
+        const { filter, fetchTodos, requestTodos } = this.props
+        requestTodos(filter)
         fetchTodos(filter)
     }
 
     render () {
-        const { toggleTodo, ...rest } = this.props
-        return <TodoList {...rest} onTodoClick={toggleTodo}/>
+        const { toggleTodo, isFetching, todos } = this.props
+        if (isFetching && !todos.length)
+            return <p>Loading</p>
+        return <TodoList
+            todos={todos}
+            onTodoClick={toggleTodo}/>
     }
 }
 
@@ -36,6 +41,7 @@ const mapStateToProps = (state, { params }) => {
     const filter = params.filter || 'all'
     return {
         todos: getVisibleTodos(state, filter),
+        isFetching: getIsFetching(state, filter),
         filter
     }
 }
