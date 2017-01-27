@@ -1,7 +1,8 @@
 import { createStore }from 'redux';
 import { applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
-import promise from 'redux-promise';
+// import promise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 import todoApp from './reducers'
 
@@ -46,6 +47,17 @@ import todoApp from './reducers'
 //     )
 // }
 
+
+/**
+ * replaced by react-thunk module
+ */
+// const thunk = (store) => (next) => (action) => (
+//     typeof action === 'function'?
+//         action(store.dispatch, store.getState):
+//         next(action)
+// )
+
+
 const configureStore = () => {
 
     /**
@@ -55,7 +67,10 @@ const configureStore = () => {
     /**
      * Add promise support to dispatch
      */
-    const middlewares = [promise];
+    /**
+     * Add thunk support to dispatch
+     */
+    const middlewares = [thunk];
 
 
      /**

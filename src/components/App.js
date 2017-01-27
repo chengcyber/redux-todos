@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import TodoEntry from './TodoEntry.js'
 import VisibilityTodoList from '../containers/VisibilityTodoList.js';

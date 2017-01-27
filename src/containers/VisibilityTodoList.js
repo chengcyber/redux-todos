@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import TodoList from '../components/TodoList.js';
+import FetchError from '../components/FetchError.js'
 import * as actions from '../actions';
-import { getVisibleTodos, getIsFetching } from '../reducers';
+import { getVisibleTodos, getIsFetching, getFetchErrorMessage } from '../reducers';
 
 /**
  * To invoke life cycle method to update todos
@@ -21,15 +22,21 @@ class VisibilityTodoList extends Component {
     }
 
     fetchData() {
-        const { filter, fetchTodos, requestTodos } = this.props
-        requestTodos(filter)
+        const { filter, fetchTodos } = this.props
         fetchTodos(filter)
+            // .then(() => console.log('done'))
+            // all thunk function returns promise
     }
 
     render () {
-        const { toggleTodo, isFetching, todos } = this.props
+        const { toggleTodo, isFetching, fetchErrorMessage, todos } = this.props
         if (isFetching && !todos.length)
             return <p>Loading</p>
+        if (fetchErrorMessage && !todos.length)
+            return <FetchError
+                        error={fetchErrorMessage}
+                        onRetry={() => this.fetchData()}
+                    />
         return <TodoList
             todos={todos}
             onTodoClick={toggleTodo}/>
@@ -42,6 +49,7 @@ const mapStateToProps = (state, { params }) => {
     return {
         todos: getVisibleTodos(state, filter),
         isFetching: getIsFetching(state, filter),
+        fetchErrorMessage: getFetchErrorMessage(state, filter),
         filter
     }
 }

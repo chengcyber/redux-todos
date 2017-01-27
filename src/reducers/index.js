@@ -23,11 +23,13 @@ export default todos;
 
 
 
-export const getVisibleTodos = (state, filter) => (
+export const getVisibleTodos = (state, filter) =>
     fromCreateList.getIds(state.listByFilter[filter]).map( id =>
         fromById.getTodoById(state.byId, id)
     )
-)
 
 export const getIsFetching = (state, filter) =>
     fromCreateList.getIsFetching(state.listByFilter[filter])
+
+export const getFetchErrorMessage = (state, filter) =>
+    fromCreateList.getFetchErrorMessage(state.listByFilter[filter])
