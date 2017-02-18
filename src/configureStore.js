@@ -2,7 +2,9 @@ import { createStore }from 'redux';
 import { applyMiddleware } from 'redux';
 import createLogger from 'redux-logger';
 // import promise from 'redux-promise';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './actions';
 
 import todoApp from './reducers'
 
@@ -67,10 +69,16 @@ const configureStore = () => {
     /**
      * Add promise support to dispatch
      */
+    // const middlewares = [promise];
     /**
      * Add thunk support to dispatch
      */
-    const middlewares = [thunk];
+    // const middlewares = [thunk];
+    /**
+     * Add Saga support to dispatch
+     */
+    const sagaMiddleware = createSagaMiddleware();
+    const middlewares = [sagaMiddleware];
 
 
      /**
@@ -87,6 +95,8 @@ const configureStore = () => {
         // presistedState,
         applyMiddleware(...middlewares)
     )
+
+    sagaMiddleware.run(rootSaga);
     /**
      * Throttle here to prevent expensive JSON.stringify in saveState() more often than 1 sec
      */
