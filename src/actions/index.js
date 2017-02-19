@@ -3,7 +3,7 @@ import * as api from '../api';
 import { getIsFetching } from '../reducers';
 import { normalize } from 'normalizr';
 import * as schema from './schema';
-import {takeEvery, call, put, select, cancel} from 'redux-saga/effects';
+import {takeEvery, call, put} from 'redux-saga/effects';
 
 /**
  * Deprecated, back-end actions
@@ -123,6 +123,11 @@ export const toggleTodo = (id) => ({
     id
 })
 
+/**
+ * Worker saga
+ * fetch todo, if success, dispatch FETCH_TODOS_SUCCESS with todos,
+ * if fail, dispatch FETCH_TODOS_FAIL with error
+ */
 function* fetchTodoSaga(action) {
     console.log('fetch todo', action);
     const {filter} = action;
@@ -145,6 +150,11 @@ function* fetchTodoSaga(action) {
     }
 }
 
+/**
+ * Worker Saga
+ * add todo when 'ADD_TODO_REQUEST' with text,
+ * if success, dispatch ADD_TODO_SUCCESS with new todo
+ */
 function* addTodoSaga(action) {
     console.log('add todo', action);
     const {text} = action;
@@ -158,6 +168,11 @@ function* addTodoSaga(action) {
     });
 }
 
+/**
+ * Worker Saga
+ * toggle todo when 'TOGGLE_TODO_REQUEST' with id,
+ * if success, dispatch TOGGLE_TODO_SUCCESS with modified todo
+ */
 function* toggleTodoSaga(action) {
     console.log('toggle todo', action);
     const {id} = action;
@@ -173,9 +188,12 @@ function* toggleTodoSaga(action) {
  * root saga
  * 1.watch fetch todo request
  * 2.watch add todo request
+ * 3.watch toggle todo request
  */
 export default function* rootSaga () {
+    // yield takeEvery('FETCH_TODOS_REQUEST', watchFetchTodoSaga);
     yield takeEvery('FETCH_TODOS_REQUEST', fetchTodoSaga);
+    // yield fork(watchFetchTodoSaga);
     yield takeEvery('ADD_TODO_REQUEST', addTodoSaga);
     yield takeEvery('TOGGLE_TODO_REQUEST', toggleTodoSaga);
 }

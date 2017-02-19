@@ -22,8 +22,10 @@ class VisibilityTodoList extends Component {
     }
 
     fetchData() {
-        const { filter, fetchTodos } = this.props
-        fetchTodos(filter)
+        const { filter, fetchTodos, isFetching } = this.props
+        if (!isFetching) {
+            fetchTodos(filter)
+        }
             // .then(() => console.log('done'))
             // all thunk function returns promise
     }
